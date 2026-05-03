@@ -49,22 +49,33 @@
   }
   .nav-logo {
     font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 900;
-    color: var(--dark); text-decoration: none; letter-spacing: -0.03em;
+    color: var(--white); text-decoration: none; letter-spacing: -0.03em;
+    transition: color 0.4s;
   }
-  .nav-logo span { color: var(--green); }
+  .nav-logo span { color: var(--accent); transition: color 0.4s; }
+  nav.scrolled .nav-logo { color: var(--dark); }
+  nav.scrolled .nav-logo span { color: var(--green); }
+
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a {
-  color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.85);
     font-size: 0.875rem; font-weight: 500;
-    transition: color 0.2s; position: relative;
+    text-decoration: none;
+    transition: color 0.3s; position: relative;
   }
   .nav-links a::after {
     content: ''; position: absolute; bottom: -3px; left: 0;
     width: 0; height: 2px; background: var(--green);
     border-radius: 2px; transition: width 0.3s;
   }
-  .nav-links a:hover, .nav-links a.active { color: var(--green); }
+  /* Scrolled state — links turn green */
+  nav.scrolled .nav-links a { color: var(--text-mid); }
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--accent); }
+  nav.scrolled .nav-links a:hover,
+  nav.scrolled .nav-links a.active { color: var(--green); }
   .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
   .nav-cta {
     background: var(--green); color: var(--white);
     font-size: 0.875rem; font-weight: 600;
@@ -78,10 +89,11 @@
     cursor: pointer; padding: 4px; background: none; border: none;
   }
   .hamburger span {
-    display: block; width: 24px; height: 2px; 
+    display: block; width: 24px; height: 2px;
     background: #fff;
-    transition: transform 0.3s, opacity 0.3s;
+    transition: transform 0.3s, opacity 0.3s, background 0.4s;
   }
+  nav.scrolled .hamburger span { background: var(--dark); }
   .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .hamburger.open span:nth-child(2) { opacity: 0; }
   .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -93,34 +105,81 @@
   }
   .hero-img {
     position: absolute; inset: 0;
+    /* Unsplash solar panel image — no local file dependency */
     background: url('../img/markus-spiske-rNn_TU8dvoY-unsplash.jpg') center/cover no-repeat;
-    opacity: 0.32;
+    opacity: 0.38;
   }
   .hero-overlay {
     position: absolute; inset: 0;
- background: linear-gradient(
-  to right,
-  rgba(34, 197, 94, 0.35) 0%,  
-  rgba(34, 197, 94, 0.25) 40%,  
-  rgba(34, 197, 94, 0.1) 60%,   
-  rgba(34, 197, 94, 0) 100%     
-);
+    background: linear-gradient(
+      to right,
+      rgba(15,26,18,0.72) 0%,
+      rgba(15,26,18,0.55) 45%,
+      rgba(15,26,18,0.25) 75%,
+      rgba(15,26,18,0.1) 100%
+    );
   }
-  hero-layout {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2.5rem;
-  padding: 0 6%;
-  padding-top: var(--nav-h);
-}
 
-.hero-content {
-  max-width: 880px;
-  flex: 1;
-}
+  /* ── HERO LAYOUT ───────────────────────────── */
+  .hero-layout {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    padding: 0 6%;
+    padding-top: var(--nav-h);
+  }
+
+  .hero-content {
+    max-width: 620px;
+    flex: 1;
+  }
+
+  /* ── STATS — vertical stack on desktop ──────── */
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    flex-shrink: 0;
+    animation: fadeUp 0.8s 0.5s both;
+  }
+
+  .hero-stat {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 1.125rem 1.75rem;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: background 0.3s;
+  }
+  .hero-stat:hover {
+    background: rgba(61, 214, 140, 0.12);
+    border-color: rgba(61, 214, 140, 0.3);
+  }
+  .hero-stat strong {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .hero-stat span {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
   .hero-tag {
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(61,214,140,0.14); border: 1px solid rgba(61,214,140,0.28);
@@ -144,11 +203,11 @@
   }
   h1 em { font-style: normal; color: var(--accent); }
   .hero-sub {
-  font-size: 1.2rem;
-  line-height: 1.85;
-  max-width: 520px;
+    font-size: 1.2rem;
+    line-height: 1.85;
+    max-width: 520px;
     color: rgba(255,255,255,0.7);
- margin-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
     font-weight: 300; animation: fadeUp 0.8s 0.2s both;
   }
   .hero-actions {
@@ -180,27 +239,14 @@
     border-color: rgba(255,255,255,0.6);
     background: rgba(255,255,255,0.07); transform: translateY(-2px);
   }
-  .hero-stats {
-    position: absolute; right: 6%; bottom: 8%;
-    display: flex; gap: 2.5rem; animation: fadeUp 0.8s 0.5s both;
-  }
-  .hero-stat {
-  padding: 1.25rem 1.5rem;
-  min-width: 210px;
-}
-.hero-stat strong {
-  font-size: 2.4rem;
-}
-  .hero-stat span {
-    font-size: 0.7rem; color: rgba(255,255,255,0.42);
-    text-transform: uppercase; letter-spacing: 0.1em;
-  }
+
   .hero-scroll {
     position: absolute; bottom: 2rem; left: 6%;
     display: flex; align-items: center; gap: 10px;
     color: rgba(255,255,255,0.32); font-size: 0.7rem;
     letter-spacing: 0.1em; text-transform: uppercase;
     animation: fadeUp 0.8s 0.6s both;
+    z-index: 2;
   }
   .scroll-line {
     width: 36px; height: 1px; background: rgba(255,255,255,0.18);
@@ -340,7 +386,6 @@
     color: var(--border-dark); line-height: 1; margin-bottom: 1.25rem; transition: color 0.3s;
   }
   .step:hover .step-num { color: var(--green); }
-  .step-icon { font-size: 1.75rem; margin-bottom: 0.875rem; display: block; }
   .step h4 {
     font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.625rem;
     color: var(--text); letter-spacing: -0.01em;
@@ -497,25 +542,30 @@
   .mobile-menu a:last-child { border-bottom: none; }
   .mobile-menu a:hover { color: var(--green); }
 
-  /* RESPONSIVE */
+  /* ── RESPONSIVE ──────────────────────────────── */
   @media (max-width: 960px) {
+    /* Stack hero: content on top, stats below as a horizontal row */
     .hero-layout {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+      flex-direction: column;
+      align-items: flex-start;
+      padding-top: calc(var(--nav-h) + 2rem);
+      padding-bottom: 5rem;
+      gap: 2.5rem;
+    }
+    .hero-stats {
+      flex-direction: row;
+      width: 100%;
+      gap: 0.75rem;
+    }
+    .hero-stat {
+      flex: 1;
+      min-width: 0;
+      text-align: center;
+      align-items: center;
+      padding: 1rem 0.75rem;
+    }
+    .hero-stat strong { font-size: 1.75rem; }
 
-  .hero-stats {
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
-    margin-left: 0;
-  }
-
-  .hero-stat {
-    flex: 1;
-    min-width: unset;
-    text-align: center;
-  }
     .nav-links, .nav-cta { display: none; }
     .hamburger { display: flex; }
     .services-layout { grid-template-columns: 1fr; }
@@ -530,6 +580,7 @@
   @media (max-width: 600px) {
     section { padding: 5rem 5%; }
     h1 { font-size: 2.6rem; }
+    .hero-stat strong { font-size: 1.5rem; }
     .steps-grid { grid-template-columns: 1fr; }
     .benefits-grid { grid-template-columns: 1fr; }
     .benefit-card.span2 { grid-column: auto; }
@@ -566,24 +617,37 @@
 
 <!-- HERO -->
 <section id="home">
+  <div class="hero-img"></div>
+  <div class="hero-overlay"></div>
   <div class="hero-layout">
-  <div class="hero-content">
-    <div class="hero-tag">Clean Energy Solutions</div>
-    <h1>Power your future with <em>clean</em> solar energy</h1>
-    <p class="hero-sub">Cut your electricity bills by up to 90% with premium solar installations. Trusted by 3,200+ homeowners and businesses.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-primary">
-        Get a Free Quote
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a href="#how-it-works" class="btn-secondary">How It Works</a>
+    <div class="hero-content">
+      <div class="hero-tag">Clean Energy Solutions</div>
+      <h1>Power your future with <em>clean</em> solar energy</h1>
+      <p class="hero-sub">Cut your electricity bills by up to 90% with premium solar installations. Trusted by 3,200+ homeowners and businesses.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">
+          Get a Free Quote
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#how-it-works" class="btn-secondary">How It Works</a>
+      </div>
     </div>
-  </div>
-  <div class="hero-stats">
-    <div class="hero-stat"><strong>3,200+</strong><span>Installations</span></div>
-    <div class="hero-stat"><strong>90%</strong><span>Bill Reduction</span></div>
-    <div class="hero-stat"><strong>25yr</strong><span>Warranty</span></div>
-  </div>
+
+    <!-- Stats: vertical stack on desktop, horizontal row on mobile -->
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <strong>3,200+</strong>
+        <span>Installations</span>
+      </div>
+      <div class="hero-stat">
+        <strong>90%</strong>
+        <span>Bill Reduction</span>
+      </div>
+      <div class="hero-stat">
+        <strong>25yr</strong>
+        <span>Warranty</span>
+      </div>
+    </div>
   </div>
   <div class="hero-scroll"><div class="scroll-line"></div>Scroll to explore</div>
 </section>
