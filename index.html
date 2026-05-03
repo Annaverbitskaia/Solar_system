@@ -4,300 +4,915 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>SolarRise — Clean Energy Solutions</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
 <style>
-:root {
-  --green: #1A7A4A;
-  --green-light: #22A060;
-  --accent: #3DD68C;
-  --dark: #0F1A12;
-  --white: #FFFFFF;
-  --text: #111814;
-  --text-mid: #4A5A50;
-  --text-muted: #8A9E92;
-  --border: #DDE8E0;
-  --nav-h: 68px;
-}
+  :root {
+    --green: #1A7A4A;
+    --green-light: #22A060;
+    --green-pale: #E8F5EE;
+    --green-tag: #D1EAD9;
+    --accent: #3DD68C;
+    --dark: #0F1A12;
+    --body: #F4F7F4;
+    --white: #FFFFFF;
+    --text: #111814;
+    --text-mid: #4A5A50;
+    --text-muted: #8A9E92;
+    --border: #DDE8E0;
+    --border-dark: #C5D8CC;
+    --nav-h: 68px;
+  }
 
-* { margin:0; padding:0; box-sizing:border-box; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
 
-body {
-  font-family:'Inter',sans-serif;
-  overflow-x:hidden;
-}
-
-/* NAV */
-nav {
-  position:fixed;
-  top:0; left:0; right:0;
-  height:var(--nav-h);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:0 6%;
-  z-index:100;
-  transition:0.3s;
-}
-
-/* DEFAULT HERO NAV (WHITE) */
-.nav-logo {
-  color:#fff;
-  font-weight:800;
-  text-decoration:none;
-}
-
-.nav-links a {
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100; height: var(--nav-h);
+    display: flex; align-items: center;
+    justify-content: space-between; padding: 0 6%;
+    transition: background 0.4s, box-shadow 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--border);
+  }
+  .nav-logo {
+    font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 900;
+    color: var(--dark); text-decoration: none; letter-spacing: -0.03em;
+  }
+  .nav-logo span { color: var(--green); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
   color: rgba(255,255,255,0.85);
-  text-decoration:none;
-  margin:0 1rem;
-  font-size:0.9rem;
-}
+    font-size: 0.875rem; font-weight: 500;
+    transition: color 0.2s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0;
+    width: 0; height: 2px; background: var(--green);
+    border-radius: 2px; transition: width 0.3s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--green); }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+  .nav-cta {
+    background: var(--green); color: var(--white);
+    font-size: 0.875rem; font-weight: 600;
+    padding: 0.6rem 1.4rem; border-radius: 100px;
+    text-decoration: none; transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--green-light); transform: translateY(-1px); }
 
-.nav-links a:hover {
-  color: var(--accent);
-}
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px; background: none; border: none;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px; 
+    background: #fff;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-.nav-cta {
-  color:#fff;
-  border:1px solid rgba(255,255,255,0.3);
-  padding:0.5rem 1rem;
-  border-radius:100px;
-  text-decoration:none;
-}
-
-/* hamburger white */
-.hamburger span {
-  display:block;
-  width:22px;
-  height:2px;
-  margin:4px 0;
-  background:#fff;
-}
-
-/* SCROLLED NAV */
-nav.scrolled {
-  background:rgba(255,255,255,0.95);
-  backdrop-filter:blur(10px);
-}
-
-nav.scrolled .nav-logo,
-nav.scrolled .nav-links a {
-  color:var(--text-mid);
-}
-
-nav.scrolled .nav-cta {
-  background:var(--green);
-  color:#fff;
-  border:none;
-}
-
-nav.scrolled .hamburger span {
-  background:var(--dark);
-}
-
-/* HERO */
-#home {
-  min-height:100vh;
-  background:var(--dark);
-  position:relative;
-  display:flex;
-  align-items:center;
-}
-
-.hero-img {
-  position:absolute;
-  inset:0;
-  background:url('../img/markus-spiske-rNn_TU8dvoY-unsplash.jpg') center/cover no-repeat;
-  opacity:0.3;
-}
-
-.hero-overlay {
-  position:absolute;
-  inset:0;
-  background: linear-gradient(
-    to right,
-    rgba(34,197,94,0.35),
-    rgba(34,197,94,0.25) 40%,
-    rgba(34,197,94,0.1),
-    transparent
-  );
-}
-
-/* HERO LAYOUT */
-.hero-layout {
-  position:relative;
-  z-index:2;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  width:100%;
-  padding:0 6%;
-  padding-top:var(--nav-h);
-  gap:4rem;
+  /* HERO */
+  #home {
+    min-height: 100vh; background: var(--dark);
+    position: relative; display: flex; align-items: center; overflow: hidden;
+  }
+  .hero-img {
+    position: absolute; inset: 0;
+    background: url('../img/markus-spiske-rNn_TU8dvoY-unsplash.jpg') center/cover no-repeat;
+    opacity: 0.32;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+ background: linear-gradient(
+  to right,
+  rgba(34, 197, 94, 0.35) 0%,  
+  rgba(34, 197, 94, 0.25) 40%,  
+  rgba(34, 197, 94, 0.1) 60%,   
+  rgba(34, 197, 94, 0) 100%     
+);
+  }
+  hero-layout {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 0 6%;
+  padding-top: var(--nav-h);
 }
 
 .hero-content {
-  max-width:850px;
+  max-width: 880px;
+  flex: 1;
 }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(61,214,140,0.14); border: 1px solid rgba(61,214,140,0.28);
+    color: var(--accent); font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 100px; margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s both;
+  }
+  .hero-tag::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%; animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
 
-.hero-tag {
-  display:inline-flex;
-  padding:5px 12px;
-  border-radius:100px;
-  background:rgba(61,214,140,0.14);
-  border:1px solid rgba(61,214,140,0.28);
-  color:var(--accent);
-  margin-bottom:1.5rem;
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.8rem, 5.5vw, 5rem);
+    font-weight: 900; line-height: 1.06; letter-spacing: -0.03em;
+    color: var(--white); margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s 0.1s both;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub {
+  font-size: 1.2rem;
+  line-height: 1.85;
+  max-width: 520px;
+    color: rgba(255,255,255,0.7);
+ margin-bottom: 2.5rem;
+    font-weight: 300; animation: fadeUp 0.8s 0.2s both;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s both;
+  }
+  .btn-primary {
+    background: var(--accent); color: var(--dark);
+    font-family: 'Inter', sans-serif; font-size: 0.9375rem; font-weight: 600;
+    padding: 0.875rem 1.875rem; border-radius: 100px; border: none;
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(61,214,140,0.35);
+  }
+  .btn-primary:hover {
+    background: #5EEAA6; transform: translateY(-2px);
+    box-shadow: 0 8px 36px rgba(61,214,140,0.45);
+  }
+  .btn-secondary {
+    background: transparent; color: var(--white);
+    font-family: 'Inter', sans-serif; font-size: 0.9375rem; font-weight: 500;
+    padding: 0.875rem 1.875rem; border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.25); cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.07); transform: translateY(-2px);
+  }
+  .hero-stats {
+    position: absolute; right: 6%; bottom: 8%;
+    display: flex; gap: 2.5rem; animation: fadeUp 0.8s 0.5s both;
+  }
+  .hero-stat {
+  padding: 1.25rem 1.5rem;
+  min-width: 210px;
 }
-
-h1 {
-  font-family:'Fraunces';
-  font-size:clamp(2.8rem,5vw,5rem);
-  color:#fff;
-  margin-bottom:1rem;
-}
-
-h1 em { color:var(--accent); font-style:normal; }
-
-.hero-sub {
-  color:rgba(255,255,255,0.7);
-  max-width:480px;
-  margin-bottom:2rem;
-  line-height:1.7;
-}
-
-/* BUTTONS */
-.hero-actions {
-  display:flex;
-  gap:1rem;
-}
-
-.nav-cta:hover {
-  background:rgba(255,255,255,0.15);
-}
-
-/* STATS */
-.hero-stats {
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-  align-items:flex-end;
-}
-
-.hero-stat {
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.14);
-  backdrop-filter:blur(12px);
-  padding:1rem 1.2rem;
-  border-radius:16px;
-  min-width:180px;
-}
-
 .hero-stat strong {
-  font-family:'Fraunces';
-  font-size:2rem;
-  color:#fff;
-  display:block;
+  font-size: 2.4rem;
 }
+  .hero-stat span {
+    font-size: 0.7rem; color: rgba(255,255,255,0.42);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 2rem; left: 6%;
+    display: flex; align-items: center; gap: 10px;
+    color: rgba(255,255,255,0.32); font-size: 0.7rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    animation: fadeUp 0.8s 0.6s both;
+  }
+  .scroll-line {
+    width: 36px; height: 1px; background: rgba(255,255,255,0.18);
+    position: relative; overflow: hidden;
+  }
+  .scroll-line::after {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%; background: var(--accent);
+    animation: scrollLine 2s infinite;
+  }
+  @keyframes scrollLine { to { left: 100%; } }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: none; }
+  }
 
-.hero-stat span {
-  font-size:0.7rem;
-  color:rgba(255,255,255,0.4);
-  text-transform:uppercase;
-}
+  /* TRUST BAR */
+  .trust-bar {
+    background: var(--white); border-bottom: 1px solid var(--border);
+    padding: 1.25rem 6%; display: flex; align-items: center; gap: 3rem; overflow: hidden;
+  }
+  .trust-label {
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted); white-space: nowrap; flex-shrink: 0;
+  }
+  .trust-scroll { display: flex; gap: 3rem; animation: scrollLogos 22s linear infinite; }
+  .trust-scroll span {
+    font-size: 0.8rem; font-weight: 600; color: var(--border-dark);
+    white-space: nowrap; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  @keyframes scrollLogos { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-/* MOBILE */
-@media (max-width:960px) {
-  .hero-layout {
-    flex-direction:column;
-    align-items:flex-start;
+  /* SECTIONS */
+  section { padding: 6.5rem 6%; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--green); font-weight: 600; margin-bottom: 0.875rem;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 900; letter-spacing: -0.025em; line-height: 1.1;
+    color: var(--text); margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: 1rem; color: var(--text-muted); line-height: 1.75;
+    max-width: 480px; font-weight: 300;
+  }
+
+  /* SERVICES */
+  #services { background: var(--white); }
+  .services-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    padding-bottom: 3rem; border-bottom: 1px solid var(--border);
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .services-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 0;
+  }
+  .services-list {
+    border-right: 1px solid var(--border);
+    padding-right: 4rem; padding-top: 3rem;
+  }
+  .svc-row {
+    display: flex; align-items: center; gap: 1.5rem;
+    padding: 1.25rem 0; border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: background 0.2s; position: relative;
+  }
+  .svc-row:last-child { border-bottom: none; }
+  .svc-row:hover .svc-num,
+  .svc-row.active .svc-num { color: var(--green); }
+  .svc-row:hover .svc-name { color: var(--green); }
+  .svc-row.active .svc-name { color: var(--text); font-weight: 600; }
+  .svc-row.active::before {
+    content: ''; position: absolute; left: -6%; top: 0; bottom: 0;
+    width: 3px; background: var(--green); border-radius: 0 2px 2px 0;
+  }
+  .svc-num {
+    font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+    letter-spacing: 0.05em; min-width: 28px; transition: color 0.2s;
+  }
+  .svc-name {
+    font-size: 1rem; font-weight: 500; color: var(--text-mid); transition: color 0.2s;
+  }
+  .services-detail { padding-left: 4rem; padding-top: 3rem; }
+  .svc-panel { display: none; animation: fadeUp 0.35s both; }
+  .svc-panel.active { display: block; }
+  .svc-panel-tag {
+    display: inline-block; background: var(--green-tag); color: var(--green);
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 100px; margin-bottom: 1.25rem;
+  }
+  .svc-panel h3 {
+    font-family: 'Fraunces', serif; font-size: 1.75rem; font-weight: 900;
+    letter-spacing: -0.025em; margin-bottom: 1rem; color: var(--text); line-height: 1.2;
+  }
+  .svc-panel p {
+    font-size: 0.9375rem; color: var(--text-muted); line-height: 1.8;
+    margin-bottom: 1.75rem; font-weight: 300;
+  }
+  .svc-benefits { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .svc-benefits li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.875rem; color: var(--text-mid); line-height: 1.5;
+  }
+  .svc-benefits li::before {
+    content: ''; width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
+    background: var(--green-tag) url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%231A7A4A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center;
+    border-radius: 50%;
+  }
+  .svc-visual {
+    width: 100%; aspect-ratio: 16/9; border-radius: 14px; overflow: hidden;
+    background: var(--green-pale); display: flex; align-items: center;
+    justify-content: center; font-size: 4rem; margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+  }
+
+  /* HOW IT WORKS */
+  #how-it-works { background: var(--body); }
+  .hiw-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 3.5rem; flex-wrap: wrap; gap: 2rem;
+    padding-bottom: 3rem; border-bottom: 1px solid var(--border);
+  }
+  .steps-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: 18px; overflow: hidden;
+  }
+  .step {
+    background: var(--white); padding: 2.5rem 2rem;
+    position: relative; transition: background 0.3s;
+  }
+  .step:hover { background: var(--green-pale); }
+  .step-num {
+    font-family: 'Fraunces', serif; font-size: 3rem; font-weight: 900;
+    color: var(--border-dark); line-height: 1; margin-bottom: 1.25rem; transition: color 0.3s;
+  }
+  .step:hover .step-num { color: var(--green); }
+  .step-icon { font-size: 1.75rem; margin-bottom: 0.875rem; display: block; }
+  .step h4 {
+    font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.625rem;
+    color: var(--text); letter-spacing: -0.01em;
+  }
+  .step p { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
+
+  /* BENEFITS */
+  #benefits { background: var(--white); }
+  .benefits-layout {
+    display: grid; grid-template-columns: 1.1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+  .benefits-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: 18px;
+    overflow: hidden; margin-top: 2.5rem;
+  }
+  .benefit-card { background: var(--white); padding: 1.75rem; transition: background 0.3s; }
+  .benefit-card:hover { background: var(--green-pale); }
+  .benefit-card.span2 { grid-column: 1 / -1; }
+  .benefit-icon { font-size: 1.5rem; margin-bottom: 0.875rem; display: block; }
+  .benefit-card h4 { font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); }
+  .benefit-card p { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.65; font-weight: 300; }
+  .benefit-stat {
+    font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 900;
+    color: var(--green); margin-top: 0.75rem;
+  }
+  .benefits-visual { position: relative; }
+  .big-stat-card {
+    background: var(--dark); border-radius: 22px; padding: 3.5rem 3rem;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .big-stat-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(61,214,140,0.12) 0%, transparent 70%);
+  }
+  .big-num {
+    font-family: 'Fraunces', serif; font-size: 5.5rem; font-weight: 900;
+    color: var(--accent); line-height: 1; position: relative;
+  }
+  .big-num sup { font-size: 2rem; vertical-align: top; margin-top: 1rem; }
+  .big-label { font-size: 0.9rem; color: rgba(255,255,255,0.5); margin-top: 0.5rem; font-weight: 300; position: relative; }
+  .mini-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--border); margin-top: 1rem; border-radius: 14px;
+    overflow: hidden; border: 1px solid var(--border);
+  }
+  .mini-stat { background: var(--body); padding: 1.25rem; text-align: center; }
+  .mini-stat strong {
+    display: block; font-family: 'Fraunces', serif;
+    font-size: 1.375rem; font-weight: 900; color: var(--text);
+  }
+  .mini-stat span { font-size: 0.7rem; color: var(--text-muted); }
+
+  /* CONTACT */
+  #contact { background: var(--body); }
+  .contact-layout { display: grid; grid-template-columns: 1fr 1.25fr; gap: 5rem; align-items: start; }
+  .contact-detail { display: flex; gap: 1rem; margin-top: 2rem; align-items: flex-start; }
+  .contact-detail-icon {
+    width: 40px; height: 40px; background: var(--green-pale);
+    border: 1px solid var(--border-dark); border-radius: 10px;
+    display: grid; place-items: center; font-size: 1rem; flex-shrink: 0;
+  }
+  .contact-detail-text strong { display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 2px; color: var(--text); }
+  .contact-detail-text span { font-size: 0.8125rem; color: var(--text-muted); font-weight: 300; }
+  .contact-form {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 22px; padding: 2.5rem;
+    box-shadow: 0 4px 32px rgba(26,122,74,0.06);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label { display: block; font-size: 0.8125rem; font-weight: 500; color: var(--text-mid); margin-bottom: 0.5rem; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; background: var(--body); border: 1px solid var(--border);
+    border-radius: 10px; padding: 0.875rem 1rem; color: var(--text);
+    font-family: 'Inter', sans-serif; font-size: 0.9375rem; font-weight: 400;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s; -webkit-appearance: none;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--green); box-shadow: 0 0 0 3px rgba(26,122,74,0.1); background: var(--white);
+  }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group select option { background: var(--white); }
+  .form-submit {
+    width: 100%; background: var(--green); color: var(--white);
+    font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600;
+    padding: 1rem; border: none; border-radius: 100px; cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(26,122,74,0.2); margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(26,122,74,0.3); }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .form-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 1rem; font-weight: 300; }
+  .form-success { display: none; text-align: center; padding: 2rem; }
+  .form-success-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+  .form-success h3 { font-family: 'Fraunces', serif; font-size: 1.5rem; margin-bottom: 0.75rem; color: var(--text); }
+  .form-success p { color: var(--text-muted); font-size: 0.9375rem; font-weight: 300; }
+  .form-error-msg { display: none; color: #DC2626; font-size: 0.75rem; margin-top: 0.35rem; }
+  .form-group.error input, .form-group.error textarea { border-color: #DC2626; }
+  .form-group.error .form-error-msg { display: block; }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: var(--dark); margin: 0 6% 5rem; border-radius: 24px;
+    padding: 4rem; text-align: center; position: relative; overflow: hidden;
+    margin-top: 20px;
+  }
+  .cta-banner::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(61,214,140,0.1) 0%, transparent 70%);
+  }
+  .cta-banner h2 {
+    font-family: 'Fraunces', serif; font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 900; color: var(--white); letter-spacing: -0.025em;
+    margin-bottom: 0.75rem; position: relative;
+  }
+  .cta-banner p { color: rgba(255,255,255,0.5); font-size: 1rem; font-weight: 300; margin-bottom: 2rem; position: relative; }
+
+  /* FOOTER */
+  footer {
+    background: var(--white); border-top: 1px solid var(--border);
+    padding: 2.5rem 6%; display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo {
+    font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 900;
+    color: var(--dark); text-decoration: none; letter-spacing: -0.02em;
+  }
+  .footer-logo span { color: var(--green); }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.8125rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--green); }
+  .footer-copy { font-size: 0.75rem; color: var(--text-muted); font-weight: 300; }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.65s, transform 0.65s; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* MOBILE MENU */
+  .mobile-menu {
+    position: fixed; top: var(--nav-h); left: 0; right: 0;
+    background: rgba(255,255,255,0.98); backdrop-filter: blur(12px);
+    padding: 1.5rem 6%; display: none; flex-direction: column; gap: 0.25rem;
+    border-bottom: 1px solid var(--border); z-index: 99;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: var(--text-mid); text-decoration: none; font-size: 1rem; font-weight: 500;
+    padding: 0.75rem 0; border-bottom: 1px solid var(--border); transition: color 0.2s;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: var(--green); }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    .hero-layout {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .hero-stats {
-    flex-direction:row;
-    width:100%;
-    justify-content:space-between;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 0;
   }
 
   .hero-stat {
-    flex:1;
-    text-align:center;
+    flex: 1;
+    min-width: unset;
+    text-align: center;
   }
-}
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .services-layout { grid-template-columns: 1fr; }
+    .services-list { border-right: none; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+    .services-detail { padding-left: 0; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .benefits-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .cta-banner { margin: 0 0 5rem; border-radius: 0; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 5rem 5%; }
+    h1 { font-size: 2.6rem; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .benefits-grid { grid-template-columns: 1fr; }
+    .benefit-card.span2 { grid-column: auto; }
+    .form-row { grid-template-columns: 1fr; }
+    .cta-banner { padding: 2.5rem 1.5rem; }
+  }
 </style>
 </head>
-
 <body>
 
+<!-- NAV -->
 <nav id="navbar">
-  <a href="#" class="nav-logo">SolarRise</a>
-
-  <div class="nav-links">
-    <a href="#">Home</a>
-    <a href="#">Services</a>
-    <a href="#">Contact</a>
-  </div>
-
-  <a href="#" class="nav-cta">Get Quote</a>
-
-  <div class="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  <a href="#home" class="nav-logo">Solar<span>Rise</span></a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#benefits">Benefits</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get a Quote</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#how-it-works" onclick="closeMobile()">How It Works</a>
+  <a href="#benefits" onclick="closeMobile()">Benefits</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- HERO -->
 <section id="home">
-  <div class="hero-img"></div>
-  <div class="hero-overlay"></div>
-
   <div class="hero-layout">
+  <div class="hero-content">
+    <div class="hero-tag">Clean Energy Solutions</div>
+    <h1>Power your future with <em>clean</em> solar energy</h1>
+    <p class="hero-sub">Cut your electricity bills by up to 90% with premium solar installations. Trusted by 3,200+ homeowners and businesses.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        Get a Free Quote
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#how-it-works" class="btn-secondary">How It Works</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><strong>3,200+</strong><span>Installations</span></div>
+    <div class="hero-stat"><strong>90%</strong><span>Bill Reduction</span></div>
+    <div class="hero-stat"><strong>25yr</strong><span>Warranty</span></div>
+  </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Scroll to explore</div>
+</section>
 
-    <div class="hero-content">
-      <div class="hero-tag">Clean Energy Solutions</div>
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span class="trust-label">Trusted by</span>
+  <div style="overflow:hidden;flex:1;">
+    <div class="trust-scroll">
+      <span>SolarEdge</span><span>LG Energy</span><span>Tesla Energy</span>
+      <span>Enphase</span><span>SunPower</span><span>Panasonic</span><span>Canadian Solar</span>
+      <span>SolarEdge</span><span>LG Energy</span><span>Tesla Energy</span>
+      <span>Enphase</span><span>SunPower</span><span>Panasonic</span><span>Canadian Solar</span>
+    </div>
+  </div>
+</div>
 
-      <h1>Power your future with <em>clean</em> solar energy</h1>
-
-      <p class="hero-sub">
-        Cut your electricity bills by up to 90% with premium solar installations.
-      </p>
-
-      <div class="hero-actions">
-        <a href="#" class="nav-cta">Get a Free Quote</a>
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header reveal">
+    <div>
+      <div class="section-label">What We Offer</div>
+      <div class="section-title">We offer smart<br>solar solutions.</div>
+    </div>
+    <p class="section-sub">That's why we're proud that so many clients trust us to deliver reliable, efficient, and sustainable solar solutions.</p>
+  </div>
+  <div class="services-layout reveal">
+    <div class="services-list">
+      <div class="svc-row active" onclick="switchSvc(0)">
+        <span class="svc-num">/01</span>
+        <span class="svc-name">Residential Solar Installation</span>
+      </div>
+      <div class="svc-row" onclick="switchSvc(1)">
+        <span class="svc-num">/02</span>
+        <span class="svc-name">Commercial Solar Solutions</span>
+      </div>
+      <div class="svc-row" onclick="switchSvc(2)">
+        <span class="svc-num">/03</span>
+        <span class="svc-name">Maintenance &amp; Support</span>
+      </div>
+      <div class="svc-row" onclick="switchSvc(3)">
+        <span class="svc-num">/04</span>
+        <span class="svc-name">Energy Optimization</span>
       </div>
     </div>
-
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <strong>3,200+</strong>
-        <span>Installations</span>
+    <div class="services-detail">
+      <div class="svc-panel active">
+        <div class="svc-visual">🏡</div>
+        <div class="svc-panel-tag">Residential</div>
+        <h3>Residential Solar Installation</h3>
+        <p>Transform your home into a self-sustaining power plant. Our certified engineers design a custom solar system tailored to your roof layout, energy usage, and budget — with full installation in as little as one day.</p>
+        <ul class="svc-benefits">
+          <li>Custom roof assessment and system design</li>
+          <li>Tier-1 panels with 25-year performance warranty</li>
+          <li>Battery storage options for 24/7 independence</li>
+          <li>Smart monitoring app included</li>
+        </ul>
       </div>
-
-      <div class="hero-stat">
-        <strong>90%</strong>
-        <span>Bill Reduction</span>
+      <div class="svc-panel">
+        <div class="svc-visual">🏢</div>
+        <div class="svc-panel-tag">Commercial</div>
+        <h3>Commercial Solar Solutions</h3>
+        <p>Slash your operational energy costs and meet ESG targets with commercial-grade solar arrays. We handle projects from small offices to large industrial facilities with zero upfront financing options.</p>
+        <ul class="svc-benefits">
+          <li>Rooftop, carport, and ground-mount systems</li>
+          <li>Power Purchase Agreements (PPA) available</li>
+          <li>ROI typically achieved within 4–6 years</li>
+          <li>Corporate sustainability reporting support</li>
+        </ul>
       </div>
-
-      <div class="hero-stat">
-        <strong>25yr</strong>
-        <span>Warranty</span>
+      <div class="svc-panel">
+        <div class="svc-visual">🔧</div>
+        <div class="svc-panel-tag">Maintenance</div>
+        <h3>Maintenance &amp; Support</h3>
+        <p>Protect your investment with proactive maintenance plans. Our technicians ensure your system operates at peak efficiency year-round, catching issues before they affect your output or warranty.</p>
+        <ul class="svc-benefits">
+          <li>Annual system health inspections</li>
+          <li>Panel cleaning and optimisation service</li>
+          <li>24/7 remote monitoring and alerts</li>
+          <li>Priority response within 24 hours</li>
+        </ul>
+      </div>
+      <div class="svc-panel">
+        <div class="svc-visual">⚡</div>
+        <div class="svc-panel-tag">Optimization</div>
+        <h3>Energy Optimization</h3>
+        <p>AI-driven analytics to maximize your production, manage battery storage intelligently, and integrate with smart home systems for ultimate efficiency and savings.</p>
+        <ul class="svc-benefits">
+          <li>AI-powered consumption analysis</li>
+          <li>Smart battery charging schedules</li>
+          <li>EV charger integration and optimization</li>
+          <li>Monthly performance reports and insights</li>
+        </ul>
       </div>
     </div>
-
   </div>
 </section>
 
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="hiw-header reveal">
+    <div>
+      <div class="section-label">The Process</div>
+      <div class="section-title">From quote to clean<br>energy in 4 steps</div>
+    </div>
+    <p class="section-sub">No hidden steps, no surprises. We make going solar simple, transparent, and fast.</p>
+  </div>
+  <div class="steps-grid reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h4>Free Consultation</h4>
+      <p>We assess your energy needs, roof condition, and usage patterns. You receive a detailed proposal with projected savings and payback timeline — at no cost.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h4>Custom Design</h4>
+      <p>Our engineers create a tailored solar layout optimized for your roof angle, shading, and local climate data to maximize every kilowatt of energy.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h4>Installation Day</h4>
+      <p>Our certified installers complete most residential jobs in a single day with minimal disruption. All permits and grid applications are handled by us.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h4>Go Solar &amp; Save</h4>
+      <p>Your system goes live. Track production and savings in real-time via our app. We remain your support partner for the life of your system.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="benefits-layout">
+    <div>
+      <div class="section-label reveal">Why Solar</div>
+      <div class="section-title reveal">Benefits that speak<br>for themselves</div>
+      <p class="section-sub reveal">Solar isn't just good for the planet — it's one of the smartest financial decisions a homeowner or business can make today.</p>
+      <div class="benefits-grid">
+        <div class="benefit-card span2 reveal">
+          <span class="benefit-icon">💰</span>
+          <h4>Significant Cost Savings</h4>
+          <p>Reduce or eliminate your electricity bills from day one. Most customers see a return on investment within 5–8 years and enjoy free energy for decades after.</p>
+          <div class="benefit-stat">Up to 90% savings</div>
+        </div>
+        <div class="benefit-card reveal">
+          <span class="benefit-icon">🌿</span>
+          <h4>Eco-Friendly</h4>
+          <p>Each home system offsets around 3–4 tonnes of CO₂ annually — equivalent to planting 100+ trees every year.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <span class="benefit-icon">🔋</span>
+          <h4>Energy Independence</h4>
+          <p>With battery storage, stay powered during outages and avoid peak-rate pricing from the grid entirely.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <span class="benefit-icon">🏠</span>
+          <h4>Increase Home Value</h4>
+          <p>Solar installations increase property value by an average of 4–6%.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <span class="benefit-icon">🛡️</span>
+          <h4>25-Year Warranty</h4>
+          <p>Every panel we install comes with a full performance warranty. We stand behind our work.</p>
+        </div>
+      </div>
+    </div>
+    <div class="benefits-visual reveal">
+      <div class="big-stat-card">
+        <div class="big-num"><sup>$</sup>1,800</div>
+        <div class="big-label">Average annual savings per household</div>
+      </div>
+      <div class="mini-stats">
+        <div class="mini-stat"><strong>3.2t</strong><span>CO₂ offset / year</span></div>
+        <div class="mini-stat"><strong>25yr</strong><span>Panel lifespan</span></div>
+        <div class="mini-stat"><strong>5–8yr</strong><span>Avg. payback period</span></div>
+        <div class="mini-stat"><strong>+5%</strong><span>Home value increase</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-layout">
+    <div class="contact-info reveal">
+      <div class="section-label">Get in Touch</div>
+      <div class="section-title">Request a free<br>consultation</div>
+      <p class="section-sub">No pressure, no commitment. Our solar advisors will assess your property and show you exactly how much you could save.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div class="contact-detail-text"><strong>Visit Us</strong><span>24 Solar Drive, Green Quarter, London</span></div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📞</div>
+        <div class="contact-detail-text"><strong>Call Us</strong><span>+44 20 7946 0900</span></div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">✉️</div>
+        <div class="contact-detail-text"><strong>Email Us</strong><span>hello@solarrise.co.uk</span></div>
+      </div>
+    </div>
+    <div class="contact-form reveal" id="contact-form-wrapper">
+      <div id="form-body">
+        <div class="form-row">
+          <div class="form-group" id="fg-name">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Jane Smith" autocomplete="name" />
+            <div class="form-error-msg">Please enter your name.</div>
+          </div>
+          <div class="form-group" id="fg-email">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="jane@example.com" autocomplete="email" />
+            <div class="form-error-msg">Please enter a valid email.</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="service">Service Interested In</label>
+          <select id="service">
+            <option value="" disabled selected>Select a service…</option>
+            <option>Residential Solar Installation</option>
+            <option>Commercial Solar Solutions</option>
+            <option>Maintenance &amp; Support</option>
+            <option>Energy Optimization</option>
+          </select>
+        </div>
+        <div class="form-group" id="fg-msg">
+          <label for="message">Your Message</label>
+          <textarea id="message" placeholder="Tell us about your property and energy goals…"></textarea>
+          <div class="form-error-msg">Please enter a message.</div>
+        </div>
+        <button class="form-submit" id="form-submit" onclick="submitForm()">
+          Request Free Consultation →
+        </button>
+        <p class="form-note">We typically respond within 2 business hours. No spam, ever.</p>
+      </div>
+      <div class="form-success" id="form-success">
+        <span class="form-success-icon">🌿</span>
+        <h3>You're on your way to solar!</h3>
+        <p>Thanks for reaching out. One of our solar advisors will be in touch within 2 business hours to discuss your free consultation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner reveal">
+  <h2>Start your solar journey<br>today with confidence</h2>
+  <p>Take the first step toward clean, renewable energy. Join thousands of homeowners and businesses switching to sustainable solar.</p>
+  <a href="#contact" class="btn-primary" style="display:inline-flex;margin:0 auto;">Get Started →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#home" class="footer-logo">Solar<span>Rise</span></a>
+  <ul class="footer-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#benefits">Benefits</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 SolarRise. All rights reserved.</p>
+</footer>
+
 <script>
-const nav = document.getElementById("navbar");
+  // NAV
+  const navbar = document.getElementById('navbar');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 30);
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+  });
 
-window.addEventListener("scroll", () => {
-  nav.classList.toggle("scrolled", window.scrollY > 40);
-});
+  // HAMBURGER
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+
+  // SERVICES
+  const svcRows = document.querySelectorAll('.svc-row');
+  const svcPanels = document.querySelectorAll('.svc-panel');
+  function switchSvc(idx) {
+    svcRows.forEach((r, i) => r.classList.toggle('active', i === idx));
+    svcPanels.forEach((p, i) => p.classList.toggle('active', i === idx));
+  }
+
+  // REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const siblings = [...e.target.parentElement.querySelectorAll('.reveal')];
+        e.target.style.transitionDelay = (siblings.indexOf(e.target) * 0.07) + 's';
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => io.observe(r));
+
+  // FORM
+  function submitForm() {
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
+    let valid = true;
+    ['fg-name','fg-email','fg-msg'].forEach(id => document.getElementById(id).classList.remove('error'));
+    if (!name.value.trim()) { document.getElementById('fg-name').classList.add('error'); valid = false; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { document.getElementById('fg-email').classList.add('error'); valid = false; }
+    if (!message.value.trim()) { document.getElementById('fg-msg').classList.add('error'); valid = false; }
+    if (!valid) return;
+    const btn = document.getElementById('form-submit');
+    btn.disabled = true; btn.textContent = 'Sending…';
+    setTimeout(() => {
+      document.getElementById('form-body').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }, 1200);
+  }
 </script>
-
 </body>
 </html>
